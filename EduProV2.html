@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPro Elite | PATRIC SOFT ®</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3976/3976631.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --dark: #0a0a0a; --panel: #161616; --white: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--dark); font-family: 'Montserrat', sans-serif; color: #e0e0e0; overflow: hidden; }
+        .navbar { background: #000; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); height: 65px; }
+        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: 1px; color: white; }
+        .logo span { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; font-weight: 400; margin-left: 5px; }
+        .container { display: flex; height: calc(100vh - 65px); }
+        .sidebar { width: 380px; padding: 20px; background: var(--panel); border-right: 1px solid #333; overflow-y: auto; }
+        .sidebar h3 { color: var(--gold); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 20px; border-left: 3px solid var(--gold); padding-left: 10px; letter-spacing: 1px; }
+        .input-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.65rem; margin-bottom: 4px; color: #777; font-weight: 800; text-transform: uppercase; }
+        input, select { width: 100%; background: #000; border: 1px solid #333; color: white; padding: 10px; border-radius: 4px; font-family: inherit; outline: none; font-size: 0.9rem; }
+        input:focus { border-color: var(--gold); }
+        .btn-main { width: 100%; padding: 15px; background: var(--gold); color: black; border: none; border-radius: 4px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; margin-top: 10px; font-size: 0.8rem; }
+        .btn-main:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2); }
+        .preview-area { flex-grow: 1; padding: 30px; overflow-y: auto; background: #0f0f0f; display: flex; flex-direction: column; align-items: center; }
+        .hoja { background: white; color: black; width: 210mm; min-height: 297mm; padding: 18mm; box-shadow: 0 0 50px rgba(0,0,0,1); position: relative; font-size: 10.5pt; line-height: 1.5; }
+        .header-inst { border: 2.5px solid black; padding: 15px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem; }
+        .title-sec { text-align: center; margin: 25px 0; }
+        .title-sec h1 { font-size: 1.6rem; text-transform: uppercase; font-weight: 900; line-height: 1; margin-bottom: 5px; }
+        .tema-badge { display: inline-block; background: black; color: white; padding: 2px 10px; font-weight: 800; margin-bottom: 10px; }
+        .section-box { margin-bottom: 25px; }
+        .section-box h4 { background: #f0f0f0; padding: 6px 12px; border-left: 5px solid black; margin-bottom: 12px; text-transform: uppercase; font-size: 0.85rem; font-weight: 800; }
+        .rubrica-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.75rem; }
+        .rubrica-table th, .rubrica-table td { border: 1px solid #bbb; padding: 8px; text-align: left; }
+        .rubrica-table th { background: #eee; text-transform: uppercase; }
+        .linea-puntos { border-bottom: 1px solid #ddd; height: 32px; margin-bottom: 2px; }
+        .footer-hoja { margin-top: 50px; border-top: 1px solid #eee; padding-top: 12px; font-size: 0.65rem; display: flex; justify-content: space-between; color: #666; }
+        @media print { body { background: white; } .sidebar, .navbar { display: none !important; } .preview-area { padding: 0; background: white; width: 100%; } .hoja { box-shadow: none; margin: 0; width: 100%; border: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">EduPro <span class="brand-tag">ELITE EDITION ®</span></div>
+    <div style="color: var(--gold); font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;">PATRIC SOFT AI ENGINE</div>
+</nav>
+
+<main class="container">
+    <aside class="sidebar">
+        <h3><i class="fas fa-microchip"></i> Inteligencia Docente</h3>
+        <div class="input-group"><label>Escuela</label><input type="text" id="escuela"></div>
+        <div class="input-group"><label>Docente</label><input type="text" id="profe"></div>
+        <div class="input-group"><label>Materia</label><input type="text" id="materia"></div>
+        <div class="input-group"><label>Tema</label><input type="text" id="tema"></div>
+        <div class="input-group"><label>Variante</label><select id="variante"><option value="TEMA A">TEMA A</option><option value="TEMA B">TEMA B</option></select></div>
+        <div class="input-group"><label>Material</label><select id="tipo"><option value="ambos">Examen + Planificación</option><option value="examen">Solo Evaluación</option><option value="plan">Solo Planificación</option></select></div>
+        <button class="btn-main" id="btnProcesar"><i class="fas fa-bolt"></i> PROCESAR MATERIAL</button>
+        <button onclick="window.print()" class="btn-main" style="background: transparent; color: var(--gold); border: 1px solid var(--gold);"><i class="fas fa-print"></i> IMPRIMIR PDF</button>
+    </aside>
+
+    <section class="preview-area">
+        <div id="documento" class="hoja">
+            <div class="header-inst">
+                <div>
+                    <p><strong>INSTITUCIÓN:</strong> <span id="outEscuela">..................</span></p>
+                    <p><strong>DOCENTE:</strong> <span id="outProfe">..................</span></p>
+                    <p><strong>ALUMNO/A:</strong> ......................................</p>
+                </div>
+                <div style="text-align: right;">
+                    <p><strong>FECHA:</strong> ____/____/2026</p>
+                    <p><strong>CURSO:</strong> _________</p>
+                </div>
+            </div>
+            <div class="title-sec">
+                <div class="tema-badge" id="outBadge">TEMA A</div>
+                <h1 id="outTitulo">Evaluación</h1>
+                <p id="outTemaSub">Materia: -</p>
+            </div>
+            <div id="contenidoDinamico">
+                <p style="text-align: center; color: #999; margin-top: 50px;">Complete los datos para generar.</p>
+            </div>
+            <footer class="footer-hoja"><span>PATRIC SOFT ® | Soluciones Educativas</span><strong>Villa Mercedes</strong></footer>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.getElementById('btnProcesar').onclick = function() {
+        // --- CONTROL DE USOS (LocalStorage) ---
+        let usos = parseInt(localStorage.getItem('edupro_usos') || 0);
+        const LIMITE = 3;
+
+        if (usos >= LIMITE) {
+            document.getElementById('contenidoDinamico').innerHTML = `
+                <div style="text-align: center; padding: 40px; border: 2px dashed red; color: black;">
+                    <i class="fas fa-lock" style="font-size: 3rem; color: red;"></i>
+                    <h2 style="margin-top:20px;">PRUEBA FINALIZADA</h2>
+                    <p>Has alcanzado el límite de ${LIMITE} usos gratuitos.</p>
+                    <a href="https://wa.me/5492657521775" style="display:inline-block; margin-top:20px; padding:15px; background:#25D366; color:white; text-decoration:none; border-radius:5px; font-weight:bold;">
+                        CONTACTAR A PATRIC SOFT ®
+                    </a>
+                </div>`;
+            return;
+        }
+
+        const materia = document.getElementById('materia').value;
+        const tema = document.getElementById('tema').value;
+        if(!materia || !tema) { alert("Completá materia y tema, socio!"); return; }
+
+        usos++;
+        localStorage.setItem('edupro_usos', usos);
+
+        // Actualizar Cabecera
+        document.getElementById('outEscuela').innerText = document.getElementById('escuela').value.toUpperCase() || "S/D";
+        document.getElementById('outProfe').innerText = document.getElementById('profe').value.toUpperCase() || "S/D";
+        document.getElementById('outBadge').innerText = `${document.getElementById('variante').value} (${usos}/${LIMITE})`;
+        document.getElementById('outTitulo').innerText = document.getElementById('tipo').value === 'plan' ? 'Planificación' : 'Evaluación';
+        document.getElementById('outTemaSub').innerText = `Materia: ${materia.toUpperCase()} | Eje: ${tema}`;
+
+        let html = "";
+        const tipo = document.getElementById('tipo').value;
+        const variante = document.getElementById('variante').value;
+
+        if(tipo === 'plan' || tipo === 'ambos') {
+            html += `<div class="section-box"><h4>Fundamentación y Objetivos</h4>
+            <p>• Promover la comprensión de ${tema} en el área de ${materia}.</p>
+            <p>• Evaluación mediante resolución crítica y aplicación de conceptos.</p></div>`;
+        }
+
+        if(tipo === 'examen' || tipo === 'ambos') {
+            html += `<div class="section-box"><h4>Consignas</h4>`;
+            let preguntas = [
+                `Defina el concepto de "${tema}" y su impacto en ${materia}.`,
+                `Enumere tres características esenciales de "${tema}".`,
+                `Explique la relación de "${tema}" con un caso práctico actual.`,
+                `Desarrolle un análisis sobre la importancia de "${tema}" hoy.`
+            ];
+            if(variante === 'TEMA B') preguntas.reverse();
+            preguntas.forEach((p, i) => {
+                html += `<p style="margin-top:10px;"><strong>${i+1}. ${p}</strong></p><div class="linea-puntos"></div><div class="linea-puntos"></div>`;
+            });
+            html += `</div>`;
+        }
+
+        html += `<div class="section-box"><h4>Rúbrica</h4>
+        <table class="rubrica-table"><tr><th>Criterio</th><th>Logrado</th><th>En Proceso</th></tr>
+        <tr><td>Contenido</td><td>Excelente</td><td>Regular</td></tr><tr><td>Entrega</td><td>En tiempo</td><td>Fuera de término</td></tr></table></div>`;
+
+        document.getElementById('contenidoDinamico').innerHTML = html;
+    };
+</script>
+</body>
+</html>
